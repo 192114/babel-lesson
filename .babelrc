@@ -1,0 +1,70 @@
+// @babel/plugin-transform-runtime + @babel-runtime
+// {
+//   "presets": [
+//     ["@babel/preset-env", {
+//       "modules": false,
+//     }]
+//   ],
+//   "plugins": [
+//     "@babel/plugin-transform-runtime",
+//   ]
+// }
+
+// babel-polyfill usage
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "modules": false,
+      "useBuiltIns": "usage",
+      "corejs": 3,
+    }]
+  ],
+  "plugins": [
+    ["@babel/plugin-transform-runtime", {
+      "corejs": false, // boolean 或者 number, 默认 false，指定是否需要 runtime 的 corejs aliasing，如果使用 env 的 useBuiltIns + polyfill，使用 false。
+      "helpers": true, // boolean, 默认 true，指定是否内联 babel 的 helper 代码 (比如 classCallCheck, extends) 
+      "regenerator": false, // 通过 preset-env 已经使用了全局的 regeneratorRuntime, 不再需要 transform-runtime 提供的 不污染全局的 regeneratorRuntime
+      "useESModules": true, // boolean, 默认 false，使用 es modules helpers, 减少 commonJS 语法代码
+      "absoluteRuntime": false // boolean, 默认 false，是否目录引用 runtime 包（有些项目会引用当前项目之外的代码，编译时会找不到 runtime 包）
+    }]
+  ]
+}
+
+// babel-polyfill entry
+// {
+//   "presets": [
+//     ["@babel/preset-env", {
+//       "modules": false,
+//       "useBuiltIns": "entry",
+//       "corejs": 3,
+//     }]
+//   ],
+//   "plugins": [
+//     ["@babel/plugin-transform-runtime", {
+//       "corejs": false, // boolean 或者 number, 默认 false，指定是否需要 runtime 的 corejs aliasing，如果使用 env 的 useBuiltIns + polyfill，使用 false。
+//       "helpers": true, // boolean, 默认 true，指定是否内联 babel 的 helper 代码 (比如 classCallCheck, extends) 
+//       "regenerator": false, // 通过 preset-env 已经使用了全局的 regeneratorRuntime, 不再需要 transform-runtime 提供的 不污染全局的 regeneratorRuntime
+//       "useESModules": true, // boolean, 默认 false，使用 es modules helpers, 减少 commonJS 语法代码
+//       "absoluteRuntime": false // boolean, 默认 false，是否目录引用 runtime 包（有些项目会引用当前项目之外的代码，编译时会找不到 runtime 包）
+//     }]
+//   ]
+// }
+
+// babel-polyfill false
+// {
+//   "presets": [
+//     ["@babel/preset-env", {
+//       "modules": false,
+//       "useBuiltIns": false,
+//     }]
+//   ],
+//   "plugins": [
+//     ["@babel/plugin-transform-runtime", {
+//       "corejs": false, // boolean 或者 number, 默认 false，指定是否需要 runtime 的 corejs aliasing，如果使用 env 的 useBuiltIns + polyfill，使用 false。
+//       "helpers": true, // boolean, 默认 true，指定是否内联 babel 的 helper 代码 (比如 classCallCheck, extends) 
+//       "regenerator": false, // 通过 preset-env 已经使用了全局的 regeneratorRuntime, 不再需要 transform-runtime 提供的 不污染全局的 regeneratorRuntime
+//       "useESModules": true, // boolean, 默认 false，使用 es modules helpers, 减少 commonJS 语法代码
+//       "absoluteRuntime": false // boolean, 默认 false，是否目录引用 runtime 包（有些项目会引用当前项目之外的代码，编译时会找不到 runtime 包）
+//     }]
+//   ]
+// }
