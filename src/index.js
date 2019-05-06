@@ -23,4 +23,10 @@
 
 // console.log(Array.isArray([]));
 
-console.log([1, 2, 3, 5].findIndex(item => item === 1))
+// console.log([1, 2, 3, 5].findIndex(item => item === 1))
+
+const f = () => {};
+
+new Promise();
+
+class Test {}

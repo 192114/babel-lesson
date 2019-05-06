@@ -62,7 +62,7 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
 ## @babel/plugin-transform-runtime
 [文档https://babeljs.io/docs/en/babel-plugin-transform-runtime](https://babeljs.io/docs/en/babel-plugin-transform-runtime)
   - babel 在每个需要的文件的顶部都会插入一些 helpers 内联代码，这可能会导致多个文件都会有重复的 helpers 代码。@babel/plugin-transform-runtime 的 helpers 选项就可以把这些模块抽离出来。
-  -@babel/plugin-transform-runtime 主要做了三件事情：core-js aliasing、helper aliasing、egenerator aliasing
+  -@babel/plugin-transform-runtime 主要做了三件事情：core-js aliasing、helper aliasing、regenerator aliasing
     - core-js aliasing：自动导入babel-runtime/core-js，并将全局静态方法、全局内置对象 映射到对应的模块。
     - helper aliasing：将内联的工具函数移除，改成通过babel-runtime/helpers模块进行导入，比如_classCallCheck工具函数。
     - regenerator aliasing：如果你使用了 async/generator 函数，则自动导入 babel-runtime/regenerator模块。
@@ -88,7 +88,7 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
 - @babel/preset-env（预设）
 - @babel/polyfill（v7.4.0似乎被废弃）
 - @babel/runtime（开发业务代码可不用，开发技术库可以使用）
-- @babel/plugin-transform-runtime（合并重复的 helper 函数
+- @babel/plugin-transform-runtime（合并重复的 helper 函数)
 
 - 别人家的配置
   ```js
