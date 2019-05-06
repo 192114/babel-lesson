@@ -87,7 +87,7 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
 - @babel/core（核心包）
 - @babel/preset-env（预设）
 - @babel/polyfill（v7.4.0似乎被废弃）
-- @babel/runtime（开发业务代码可不用，开发技术库可以使用）
+- @babel/runtime（开发业务代码可不用，开发技术库可以使用，提供helpers）
 - @babel/plugin-transform-runtime（合并重复的 helper 函数)
 
 - 别人家的配置
@@ -155,7 +155,9 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
 ## @babel/preset-env + @babel/runtime-corejs2(3) + @babel/plugin-transform-runtime
   - 相较于@babel/runtime，也转换最新ES API(Promise, Symbol)
 
-## @babel/preset-env + corejs3 + @babel/plugin-transform-runtime
+--------------------------------------------------------------------------------------------
+需要继续实验 不确定两个混用是否有效果
+## @babel/preset-env + corejs3 + @babel/plugin-transform-runtime + @babel/runtime(提供helpers)
   - 适合具体的业务场景
   - ES语法、API、实例方法都进行转换
   ```js
