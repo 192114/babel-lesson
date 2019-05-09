@@ -175,3 +175,34 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
       ]
     }
   ```
+
+  - 使用方法
+    - 安装 @babel/plugin-external-helpers @babel/cli(babel-external-helpers.js和主babel的cli babel.js)
+    - babel-external-helpers 在shell执行手动生成helper文件
+      - -t, –output-type [type] Set output format: global (default choice), umd or var
+      - -l, –whitelist Whitelist of helpers to ONLY include
+      ```shell
+        babel-external-helpers -t umd > ./helpers.js
+
+        babel-external-helpers -t umd -l createClass,classCallCheck > ./helpers.js
+      ```
+    - 引入helper.js方式
+      - 浏览器环境通过script标签引入，且保证在应用代码得上边引入
+        ```js
+          <script type="text/javascript" src="path/to/babel-helpers.js"></script>
+          <script type="text/javascript" src="app.js"></script>
+        ```
+      - node环境,引入一个使用babelHelpers污染全局范围的中间件，然后启动主应用程序
+      - webpack 使用webpack-provide-plugin去注入helper.js
+        ```js
+
+        module.exports = {
+          ...
+          plugins: [
+            new webpack.ProvidePlugin({
+              babelHelpers: [path.resolve(__dirname, "dist", "helpers.js")],
+            }),
+          ],
+          ...
+        }
+        ```
