@@ -3,6 +3,7 @@
 //   "presets": [
 //     ["@babel/preset-env", {
 //       "modules": false,
+//       "debug": true,
 //     }]
 //   ],
 //   "plugins": [
@@ -17,12 +18,10 @@
       "modules": false,
       "useBuiltIns": "usage",
       "corejs": 3,
-      "targets": {
-        "ie": 10
-      }
-    }]
+      "debug": true,
+    }],
   ],
-  "plugins": [
+    "plugins": [
     ["@babel/plugin-transform-runtime", {
       "corejs": false, // boolean 或者 number, 默认 false，指定是否需要 runtime 的 corejs aliasing，如果使用 env 的 useBuiltIns + polyfill，使用 false。
       "helpers": true, // boolean, 默认 true，指定是否内联 babel 的 helper 代码 (比如 classCallCheck, extends) 

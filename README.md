@@ -112,8 +112,8 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
     ];
     
     const plugins = [
-        // 帮助减少 helper 函数
-        [
+        // 帮助减少 helper 函数 (不要与useBuiltIns: 'usage/entry',重复使用)
+        /**[
           "@babel/plugin-transform-runtime",
           {
               "corejs": false, // 默认值，可以不写
@@ -121,7 +121,7 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
               "regenerator": false, // 通过 preset-env 已经使用了全局的 regeneratorRuntime, 不再需要 transform-runtime 提供的 不污染全局的 regeneratorRuntime
               "useESModules": true, // 使用 es modules helpers, 减少 commonJS 语法代码
           }
-        ],
+        ], */
         // 由于没有了 stage-x，需要单独导入需要的插件
         [
             '@babel/plugin-proposal-function-bind'
@@ -156,8 +156,7 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
   - 相较于@babel/runtime，也转换最新ES API(Promise, Symbol)
 
 --------------------------------------------------------------------------------------------
-需要继续实验 不确定两个混用是否有效果
-## @babel/preset-env + corejs3 + @babel/plugin-transform-runtime + @babel/runtime(提供helpers)
+## @babel/preset-env + corejs3
   - 适合具体的业务场景
   - ES语法、API、实例方法都进行转换
   ```js
@@ -169,14 +168,5 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
           "corejs": 3,
         }]
       ],
-      "plugins": [
-        ["@babel/plugin-transform-runtime", {
-          "corejs": false, // boolean 或者 number, 默认 false，指定是否需要 runtime 的 corejs aliasing，如果使用 env 的 useBuiltIns + polyfill，使用 false。
-          "helpers": true, // boolean, 默认 true，指定是否内联 babel 的 helper 代码 (比如 classCallCheck, extends) 
-          "regenerator": false, // 通过 preset-env 已经使用了全局的 regeneratorRuntime, 不再需要 transform-runtime 提供的 不污染全局的 regeneratorRuntime
-          "useESModules": true, // boolean, 默认 false，使用 es modules helpers, 减少 commonJS 语法代码
-          "absoluteRuntime": false // boolean, 默认 false，是否目录引用 runtime 包（有些项目会引用当前项目之外的代码，编译时会找不到 runtime 包）
-        }]
-      ]
     }
   ```
