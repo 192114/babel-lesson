@@ -88,7 +88,8 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
 - @babel/preset-env（预设）
 - @babel/polyfill（v7.4.0似乎被废弃）
 - @babel/runtime（开发业务代码可不用，开发技术库可以使用，提供helpers）
-- @babel/plugin-transform-runtime（合并重复的 helper 函数)
+- @babel/plugin-transform-runtime（合并重复的 helper 函数，仅在开发库或工具中使用)
+- @babel/plugin-external-helpers (在使用preset时配置useBuiltIns为usage/entry时使用，不要与plugin-transform-runtime混用)
 
 - 别人家的配置
   ```js
@@ -153,10 +154,10 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
   ```
 
 ## @babel/preset-env + @babel/runtime-corejs2(3) + @babel/plugin-transform-runtime
-  - 相较于@babel/runtime，也转换最新ES API(Promise, Symbol)
+  - This can be used instead of a polyfill for any non-instance methods. It will replace things like Promise or Symbol with the library functions in core-js.
 
 --------------------------------------------------------------------------------------------
-## @babel/preset-env + corejs3
+## @babel/preset-env + corejs3 + @babel/plugin-external-helpers
   - 适合具体的业务场景
   - ES语法、API、实例方法都进行转换
   ```js
@@ -168,5 +169,9 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
           "corejs": 3,
         }]
       ],
+      "plugins": [
+        // 如果多个文件都需要helpers，会重复引用这些 helpers，会导致每一个模块都定义一份，代码冗余。所以 babel 提供了这个命令，用于生成一个包含了所有 helpers 的 js 文件，用于直接引用。然后再通过一个 plugin，去检测全局下是否存在这个模块，存在就不需要重新定义了。另外如果使用了 transform-runtime 就不需要了
+        "@babel/plugin-external-helpers",
+      ]
     }
   ```
