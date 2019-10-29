@@ -88,48 +88,9 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
 - @babel/preset-env（预设）
 - @babel/polyfill（v7.4.0似乎被废弃）
 - @babel/runtime（开发业务代码可不用，开发技术库可以使用，提供helpers）
-- @babel/plugin-transform-runtime（合并重复的 helper 函数，仅在开发库或工具中使用)
+- @babel/plugin-transform-runtime（合并重复的 helper 函数)
 - @babel/plugin-external-helpers (在使用preset时配置useBuiltIns为usage/entry时使用，不要与plugin-transform-runtime混用)
 
-- 别人家的配置
-  ```js
-    const presets = [
-      [
-        "@babel/env",
-        {
-          targets: {
-            edge: "17",
-            firefox: "60",
-            chrome: "67",
-            safari: "11.1",
-            ie: '8'
-          },
-          useBuiltIns: 'usage',
-          // Babel7 需要指定引入corejs的版本，最好使用3
-          corejs: 3,
-          modules: 'amd', // 需要转换成什么样的模块系统
-        },
-      ],
-    ];
-    
-    const plugins = [
-        // 帮助减少 helper 函数 (不要与useBuiltIns: 'usage/entry',重复使用)
-        /**[
-          "@babel/plugin-transform-runtime",
-          {
-              "corejs": false, // 默认值，可以不写
-              "helpers": true, // 默认，可以不写
-              "regenerator": false, // 通过 preset-env 已经使用了全局的 regeneratorRuntime, 不再需要 transform-runtime 提供的 不污染全局的 regeneratorRuntime
-              "useESModules": true, // 使用 es modules helpers, 减少 commonJS 语法代码
-          }
-        ], */
-        // 由于没有了 stage-x，需要单独导入需要的插件
-        [
-            '@babel/plugin-proposal-function-bind'
-        ]
-    ]
-    module.exports = { presets, plugins };
-  ```
 
 # 配置大总结
 - 最新ES 语法：比如，箭头函数
@@ -153,13 +114,45 @@ babel-preset-env 是一系列插件的合集，官方已不用再使用 preset-2
     }
   ```
 
-## @babel/preset-env + @babel/runtime-corejs2(3) + @babel/plugin-transform-runtime
-  - This can be used instead of a polyfill for any non-instance methods. It will replace things like Promise or Symbol with the library functions in core-js.
+## @babel/preset-env + @babel/runtime-corejs2 + @babel/plugin-transform-runtime
+  - ES语法、API转换
+  - 不支持实例的方法
+  - 不污染全局变量
+  
+## @babel/preset-env + @babel/runtime-corejs3 + @babel/plugin-transform-runtime
+  - ES语法、API、实例方法都进行转换
+  - 适合具体业务场景
+
+```js
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": false,
+      }
+    ]
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "corejs": {
+          "version": 3,
+          "proposals": true
+        },
+        "useESModules": true
+      }
+    ]
+  ]
+}
+```
 
 --------------------------------------------------------------------------------------------
 ## @babel/preset-env + corejs3 + @babel/plugin-external-helpers
   - 适合具体的业务场景
   - ES语法、API、实例方法都进行转换
+  - 污染全局变量
   ```js
     {
       "presets": [
